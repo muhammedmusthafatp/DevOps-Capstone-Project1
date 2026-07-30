@@ -23,36 +23,38 @@ spec:
         app: frontend
 
     spec:
+      imagePullSecrets:
+        - name: ecr-secret
+
       containers:
+        - name: frontend
 
-      - name: frontend
+          image: <AWS_ACCOUNT_ID>.dkr.ecr.<REGION>.amazonaws.com/frontend:latest
 
-        image: <AWS_ACCOUNT_ID>.dkr.ecr.<REGION>.amazonaws.com/frontend:latest
+          imagePullPolicy: Always
 
-        imagePullPolicy: Always
+          ports:
+            - containerPort: 80
 
-        ports:
-        - containerPort: 80
+          readinessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 5
+            periodSeconds: 10
 
-        readinessProbe:
-          httpGet:
-            path: /
-            port: 80
-          initialDelaySeconds: 5
-          periodSeconds: 10
+          livenessProbe:
+            httpGet:
+              path: /
+              port: 80
+            initialDelaySeconds: 15
+            periodSeconds: 20
 
-        livenessProbe:
-          httpGet:
-            path: /
-            port: 80
-          initialDelaySeconds: 15
-          periodSeconds: 20
+          resources:
+            requests:
+              cpu: "100m"
+              memory: "128Mi"
 
-        resources:
-          requests:
-            cpu: "100m"
-            memory: "128Mi"
-
-          limits:
-            cpu: "500m"
-            memory: "256Mi"
+            limits:
+              cpu: "500m"
+              memory: "256Mi"
