@@ -321,6 +321,4 @@ Both `backend` and `frontend` deployments report **2/2 replicas ready and availa
 
 <div align="center">
 
-⭐ *If this project helped you understand CI/CD on Kubernetes, consider giving it a star!* ⭐
-
 </div>
